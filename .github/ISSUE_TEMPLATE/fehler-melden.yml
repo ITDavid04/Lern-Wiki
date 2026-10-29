@@ -1,0 +1,32 @@
+name: Fehler im Inhalt melden
+description: Ein Artikel, Spickzettel oder Übungsblatt enthält etwas Falsches oder Veraltetes.
+title: "[Fehler] "
+labels: ["fehler"]
+body:
+  - type: input
+    id: artikel
+    attributes:
+      label: Welcher Artikel?
+      description: Dateiname oder Link, gern mit Abschnitt
+      placeholder: z. B. LF3.2_OSI-Modell_Transportprotokolle_Dienste.md, Abschnitt 2.1
+    validations:
+      required: true
+  - type: textarea
+    id: fehler
+    attributes:
+      label: Was ist falsch?
+      placeholder: Was steht dort, und was wäre richtig?
+    validations:
+      required: true
+  - type: input
+    id: quelle
+    attributes:
+      label: Quelle (wenn vorhanden)
+      placeholder: Gesetz, Norm, Herstellerdoku, Prüfungskatalog, Link
+  - type: checkboxes
+    id: hinweis
+    attributes:
+      label: Hinweis
+      options:
+        - label: Ich habe keine personenbezogenen Daten (z. B. von Mitschülern oder Lehrkräften) in dieses öffentliche Issue geschrieben.
+          required: true

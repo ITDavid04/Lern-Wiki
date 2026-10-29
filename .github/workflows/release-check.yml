@@ -1,0 +1,34 @@
+# Release-Wächter: prüft bei jedem Pull Request und jedem Push auf main, ob das
+# Repo alle Release-Regeln erfüllt (Rechtsdateien, Platzhalter, gesperrte
+# Begriffe, Chat-Reste, Dateigröße).
+#
+# Die Wiki-APP (https://itdavid04.github.io/Wiki-APP/) lädt die Artikel direkt
+# von main. Was auf main landet, ist also sofort in der App. Deshalb Änderungen
+# über einen Pull Request einbringen und erst mergen, wenn dieser Check grün ist.
+#
+# Einmalig nötig:
+#   Settings > Secrets and variables > Actions > Variables:
+#     RELEASE_FORBIDDEN_TERMS = Begriffe, die nie veröffentlicht werden dürfen (Komma-getrennt)
+name: Release-Wächter
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Release-Wächter (Rechtliches, Platzhalter, gesperrte Begriffe)
+        env:
+          RELEASE_FORBIDDEN_TERMS: ${{ vars.RELEASE_FORBIDDEN_TERMS }}
+        run: python3 tools/release_check.py

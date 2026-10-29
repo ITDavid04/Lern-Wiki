@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" font-family="DejaVu Sans, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Chen-Notation und Krähenfuß-Notation im Vergleich</title>
+  <desc id="d">Dasselbe Modell, Kunde erteilt Auftrag (1:n), links in Chen-Notation mit Rechtecken, Raute und Ellipsen, rechts in Krähenfuß-Notation mit Attributlisten in den Kästen und einem Krähenfuß an der n-Seite.</desc>
+  <rect width="960" height="400" fill="#ffffff"/>
+  <g fill="#1b1b1b">
+    <text x="240" y="36" font-size="20" font-weight="bold" text-anchor="middle">Chen-Notation</text>
+    <text x="720" y="36" font-size="20" font-weight="bold" text-anchor="middle">Krähenfuß-Notation</text>
+    <text x="240" y="58" font-size="13" text-anchor="middle" fill="#555">Jedes Konzept hat eine eigene Form</text>
+    <text x="720" y="58" font-size="13" text-anchor="middle" fill="#555">Kompakt, Standard in ER-Tools</text>
+  </g>
+  <line x1="480" y1="20" x2="480" y2="380" stroke="#cccccc" stroke-dasharray="6 6"/>
+
+  <!-- Chen -->
+  <g stroke="#2e7d32" stroke-width="2" fill="#e8f5e9">
+    <line x1="120" y1="220" x2="190" y2="220" stroke="#444"/>
+    <line x1="290" y1="220" x2="360" y2="220" stroke="#444"/>
+    <line x1="70" y1="198" x2="60" y2="140" stroke="#444" stroke-width="1.5"/>
+    <line x1="80" y1="242" x2="80" y2="300" stroke="#444" stroke-width="1.5"/>
+    <line x1="400" y1="198" x2="410" y2="140" stroke="#444" stroke-width="1.5"/>
+    <line x1="400" y1="242" x2="400" y2="300" stroke="#444" stroke-width="1.5"/>
+    <line x1="240" y1="196" x2="240" y2="140" stroke="#444" stroke-width="1.5"/>
+    <rect x="30" y="198" width="90" height="44" rx="2"/>
+    <rect x="360" y="198" width="90" height="44" rx="2"/>
+    <polygon points="190,220 240,190 290,220 240,250" fill="#fff8e1" stroke="#f9a825"/>
+    <ellipse cx="60" cy="122" rx="52" ry="20" fill="#ffffff" stroke="#1565c0"/>
+    <ellipse cx="80" cy="320" rx="44" ry="20" fill="#ffffff" stroke="#1565c0"/>
+    <ellipse cx="410" cy="122" rx="56" ry="20" fill="#ffffff" stroke="#1565c0"/>
+    <ellipse cx="400" cy="320" rx="44" ry="20" fill="#ffffff" stroke="#1565c0"/>
+    <ellipse cx="240" cy="122" rx="38" ry="20" fill="#ffffff" stroke="#1565c0"/>
+  </g>
+  <g font-size="14" fill="#1b1b1b" text-anchor="middle">
+    <text x="75" y="225" font-weight="bold">Kunde</text>
+    <text x="405" y="225" font-weight="bold">Auftrag</text>
+    <text x="240" y="225">erteilt</text>
+    <text x="60" y="127">KundenNr</text>
+    <text x="80" y="325">Name</text>
+    <text x="410" y="127">AuftragsNr</text>
+    <text x="400" y="325">Datum</text>
+    <text x="240" y="127">Kanal</text>
+    <text x="150" y="212" font-weight="bold">1</text>
+    <text x="330" y="212" font-weight="bold">n</text>
+  </g>
+  <g stroke="#1b1b1b" stroke-width="1.2">
+    <line x1="27" y1="131" x2="93" y2="131"/>
+    <line x1="372" y1="131" x2="448" y2="131"/>
+  </g>
+  <g font-size="12" fill="#555">
+    <text x="30" y="370">Rechteck = Entität · Raute = Beziehung · Ellipse = Attribut</text>
+    <text x="30" y="388">Unterstrichen = Primärschlüssel · „Kanal“ ist ein Attribut der Beziehung</text>
+  </g>
+
+  <!-- Krähenfuß -->
+  <g stroke="#2e7d32" stroke-width="2">
+    <rect x="530" y="140" width="140" height="120" fill="#ffffff"/>
+    <rect x="530" y="140" width="140" height="32" fill="#e8f5e9"/>
+    <rect x="780" y="140" width="150" height="144" fill="#ffffff"/>
+    <rect x="780" y="140" width="150" height="32" fill="#e8f5e9"/>
+  </g>
+  <g stroke="#444" stroke-width="2" fill="none">
+    <line x1="670" y1="210" x2="780" y2="210"/>
+    <line x1="682" y1="200" x2="682" y2="220"/>
+    <line x1="690" y1="200" x2="690" y2="220"/>
+    <line x1="762" y1="200" x2="762" y2="220"/>
+    <line x1="780" y1="198" x2="764" y2="210"/>
+    <line x1="780" y1="222" x2="764" y2="210"/>
+  </g>
+  <g font-size="14" fill="#1b1b1b">
+    <text x="600" y="161" font-weight="bold" text-anchor="middle">Kunde</text>
+    <text x="855" y="161" font-weight="bold" text-anchor="middle">Auftrag</text>
+    <text x="542" y="198">KundenNr (PK)</text>
+    <text x="542" y="222">Name</text>
+    <text x="792" y="198">AuftragsNr (PK)</text>
+    <text x="792" y="222">Datum</text>
+    <text x="792" y="246">Kanal</text>
+    <text x="792" y="270">KundenNr (FK)</text>
+  </g>
+  <g font-size="12" fill="#555">
+    <text x="676" y="192">genau 1</text>
+    <text x="714" y="238">1 bis n</text>
+    <text x="530" y="370">Attribute stehen als Liste im Kasten, die Beziehung ist nur eine Linie.</text>
+    <text x="530" y="388">„Kanal“ wandert in die Tabelle Auftrag, dazu der Fremdschlüssel.</text>
+  </g>
+</svg>

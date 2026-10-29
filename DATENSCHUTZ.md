@@ -8,15 +8,17 @@ David Hartmann, Kontaktdaten siehe [Impressum](IMPRESSUM.md).
 
 ## 2. Kurz gesagt
 
-Diese Erklärung gilt für das Wiki auf GitHub und für die Wiki-APP unter
-https://itdavid04.github.io/Wiki-APP/.
+Diese Erklärung gilt für das Wiki auf GitHub, für die Wiki-APP unter
+https://itdavid04.github.io/Wiki-APP/ und für das Lernspiel Prüfungsprügler unter
+https://itdavid04.github.io/Souls_Pruefungspruegler/ (beide zusammen im Folgenden
+„die Apps“).
 
 Ich selbst erhebe, speichere und verarbeite darüber keine personenbezogenen
 Daten. Es gibt keine Benutzerkonten, keine Kontaktformulare, keine Cookies,
 kein Tracking, keine Analyse-Tools, keine Werbung und keine eingebundenen
 Inhalte von Drittanbietern wie Videos, Schriftarten von fremden Servern oder
-Social-Media-Buttons. Schriften, Formelsatz und 3D-Grafik der App liegen auf
-demselben Server wie die App selbst.
+Social-Media-Buttons. Schriften, Formelsatz, Bilder, Musik und 3D-Grafik der
+Apps liegen auf demselben Server wie die Apps selbst.
 
 Personenbezogene Daten entstehen nur beim Hosting durch GitHub (Abschnitt 3)
 und wenn du mich von dir aus kontaktierst (Abschnitt 5). Dein Lernstand bleibt
@@ -24,10 +26,12 @@ auf deinem Gerät (Abschnitt 4).
 
 ## 3. Hosting durch GitHub
 
-Das Repository und die Wiki-APP (GitHub Pages) werden von GitHub, Inc.,
+Die Repositorys und die Apps (GitHub Pages) werden von GitHub, Inc.,
 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA, bereitgestellt.
-Die App lädt die Artikel und ihre Bilder direkt aus dem Repository, also von
-raw.githubusercontent.com, ebenfalls einem Dienst von GitHub.
+Die Wiki-APP lädt die Artikel und ihre Bilder direkt aus dem Repository, also
+von raw.githubusercontent.com, ebenfalls einem Dienst von GitHub. Der
+Prüfungsprügler bringt alle Karten selbst mit und lädt nach dem ersten Aufruf
+nichts nach.
 
 Beim Aufruf verarbeitet GitHub technisch notwendige Daten, vor allem deine
 IP-Adresse, Datum und Uhrzeit des Abrufs sowie Angaben zu Browser und
@@ -58,15 +62,17 @@ zusammengefassten Zahlen speichere ich zur eigenen Auswertung.
 ## 4. Speicher auf deinem Gerät
 
 Die Wiki-APP merkt sich deinen Lernstand (zum Beispiel welche Artikel du
-gelesen hast, Erfolge und Stempel) im Speicher deines Browsers
-(localStorage). Damit sie auch ohne Netz funktioniert, legt sie die App selbst
-und bereits geöffnete Artikel im Browser-Cache ab. Diese Daten verlassen dein
+gelesen hast, Erfolge und Stempel), der Prüfungsprügler deinen Spielstand und
+Lernkasten (Seelen, Stufe, besiegte Bosse, welche Karten sitzen, Einstellungen
+wie Musik). Beides liegt im Speicher deines Browsers (localStorage). Damit die
+Apps auch ohne Netz funktionieren, legen sie sich selbst und bei der Wiki-APP
+die bereits geöffneten Artikel im Browser-Cache ab. Diese Daten verlassen dein
 Gerät nicht, ich kann sie nicht sehen. Sie sind für die Funktionen nötig, die
 du in der App selbst nutzt (§ 25 Abs. 2 Nr. 2 TDDDG). Du löschst sie, indem du
 die Website-Daten der App in deinem Browser löschst oder die App
-deinstallierst.
+deinstallierst; im Prüfungsprügler geht das auch über „Spielstand löschen“.
 
-„Fehler melden“ in der App schickt nichts von selbst. Die App öffnet entweder
+„Fehler melden“ in der Wiki-APP schickt nichts von selbst. Die App öffnet entweder
 ein vorausgefülltes Issue auf GitHub, das erst abgeschickt wird, wenn du dort
 selbst auf Absenden tippst, oder sie kopiert den Text in deine Zwischenablage.
 Mitgeschickt werden dann nur die Angaben, die du im Formular siehst: Artikel

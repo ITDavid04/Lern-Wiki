@@ -67,7 +67,7 @@ ausdrucken, verändern und weitergeben, auch in deiner Lerngruppe oder im
 Unterricht. Bedingungen dafür:
 
 1. Nenne die Quelle, zum Beispiel so:
-   `„Titel des Artikels" von David Hartmann, Bibliothek-Lern-Wiki,
+   `„Titel des Artikels" von David Hartmann, Lern-Wiki,
    https://github.com/ITDavid04/Lern-Wiki, Lizenz CC BY-SA 4.0`
 2. Gib an, ob du etwas verändert hast.
 3. Wenn du veränderte Fassungen weitergibst, dann unter derselben Lizenz.

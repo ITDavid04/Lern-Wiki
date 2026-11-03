@@ -83,15 +83,17 @@ Die Datei ist aber nur ein Teil des Bedarfs, und sie ist keine verlässliche Ang
 schichten, kv_koepfe, kopfgroesse, bytes_je_wert = 28, 4, 128, 2
 pro_token = 2 * schichten * kv_koepfe * kopfgroesse * bytes_je_wert
 print(pro_token, "Byte pro Token")
-print(round(pro_token * 32768 / 2**30, 2), "GiB bei 32768 Token")
+for token in (32768, 131072):
+    print(round(pro_token * token / 2**30, 2), "GiB bei", token, "Token")
 ```
 
 ```text
 57344 Byte pro Token
 1.75 GiB bei 32768 Token
+7.0 GiB bei 131072 Token
 ```
 
-Bei voller Länge von rund 32.000 Token kommen bei diesem Modell also etwa 1,75 GiB dazu. Andere Modelle haben andere Werte, und die Formel selbst ist eine Vereinfachung, die für Modelle mit gruppierten Schlüssel-Wert-Köpfen gilt wie dieses. Andere Bauarten rechnen anders. Warum der Kontext diesen Speicher braucht, erklärt D1. Die Erkenntnis zählt mehr als die exakte Zahl: Ein längerer Kontext braucht zusätzlichen Speicher. Für den Einstieg reicht die Regel, über die Dateigröße hinaus Reserve einzuplanen.
+In der Konfiguration dieses Modells ist eine Länge von 32.768 Token eingetragen, dafür kommen etwa 1,75 GiB dazu. Die Modellkarte nennt mit einer Erweiterung des Positionsverfahrens sogar bis zu 131.072 Token. Dann wären es etwa 7 GiB, also das Vierfache, denn der Zwischenspeicher wächst mit der Länge. Die Formel stammt in dieser Grundform aus einem Blog über Inferenz-Optimierung. Bei gruppierten Schlüssel-Wert-Köpfen, wie dieses Modell sie hat, zählen nur die Schlüssel-Wert-Köpfe, nicht alle Aufmerksamkeitsköpfe. Andere Bauarten rechnen anders, und andere Modelle haben andere Werte. Warum der Kontext diesen Speicher braucht, erklärt D1. Die Erkenntnis zählt mehr als die exakte Zahl: Ein längerer Kontext braucht zusätzlichen Speicher. Für den Einstieg reicht die Regel, über die Dateigröße hinaus Reserve einzuplanen.
 
 ### Die Geschwindigkeit
 
@@ -219,11 +221,11 @@ typ: C
 ausfuehrung: ausfuehrlich
 reihe: ki-im-wiki
 status: final
-stand: 2026-10-08
+stand: 2026-10-21
 quellen_fachlich:
   - "llama.cpp: Quantize README (Bits pro Gewicht und Dateigrößen am Beispiel eines 8-Milliarden-Modells; F16 16,0005 bpw 14,96 GiB, Q8_0 8,5008 bpw 7,95 GiB, Q4_K_M 4,8944 bpw 4,58 GiB). https://github.com/ggml-org/llama.cpp/blob/master/tools/quantize/README.md (Zugriff 2026-10-08): Quantisierung senkt Genauigkeit der Gewichte, verkleinert und kann beschleunigen, kann Genauigkeit kosten; Requantisieren schon quantisierter Modelle kann Qualität stark senken"
-  - "NVIDIA Developer Blog: Mastering LLM Techniques: Inference Optimization. https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/ (Zugriff 2026-10-08): Decode-Phase erzeugt Token einzeln und ist speichergebunden ('memory-bound'); Geschwindigkeit wird von der Übertragung der Daten aus dem Speicher dominiert; Modellausführung häufig durch Speicherbandbreite der Gewichte begrenzt"
-  - "Qwen2.5-7B-Instruct, config.json: 28 Schichten, 28 Attention-Köpfe, 4 Key-Value-Köpfe, hidden_size 3584 (Kopfgröße 3584/28 = 128), max_position_embeddings 32768, bfloat16. https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/raw/main/config.json (Zugriff 2026-10-08)"
+  - "NVIDIA Developer Blog: Mastering LLM Techniques: Inference Optimization. https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/ (Zugriff 2026-10-08): Decode-Phase erzeugt Token einzeln und ist speichergebunden ('memory-bound'); Geschwindigkeit wird von der Übertragung der Daten aus dem Speicher dominiert; Modellausführung häufig durch Speicherbandbreite der Gewichte begrenzt; KV-Cache-Größe pro Token = 2 * (num_layers) * (num_heads * dim_head) * precision_in_bytes, Beispiel Llama 2 7B (32 Schichten, hidden_size 4096, 16 Bit) 524.288 Byte pro Token, bei 4096 Token etwa 2 GB (Zugriff 2026-10-21)"
+  - "Qwen2.5-7B-Instruct, config.json: 28 Schichten, 28 Attention-Köpfe, 4 Key-Value-Köpfe, hidden_size 3584 (Kopfgröße 3584/28 = 128), max_position_embeddings 32768, bfloat16. https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/raw/main/config.json (Zugriff 2026-10-08). Modellkarte https://huggingface.co/Qwen/Qwen2.5-7B-Instruct (Zugriff 2026-10-21): Kontext voll 131.072 Token, Generierung bis 8.192 Token; config.json standardmäßig auf 32.768 ausgelegt, für längere Eingaben YaRN über rope_scaling (factor 4.0, original_max_position_embeddings 32768); Karte warnt vor möglichem Leistungsverlust bei kurzen Texten mit statischem YaRN"
   - "Cloud Security Alliance, AI Safety Initiative: Exposed AI Infrastructure: Self-Hosted Services Under Attack (Research Note, 2026-05-07, geändert 2026-05-20). https://labs.cloudsecurityalliance.org/research/csa-research-note-exposed-ai-infrastructure-selfhosted-secur/ (Zugriff 2026-10-08): Zusammenfassung einer Untersuchung von Intruder (ca. eine Million exponierte KI-Endpunkte, aufgefunden über Zertifikatstransparenz-Logs und OSINT); bei Ollama 31 % (1.652 von über 5.200 abgefragten Instanzen) beantworteten Testanfragen ohne Anmeldung; Empfehlung Bindung an localhost bzw. private Schnittstelle"
   - "The Hacker News: We Scanned 1 Million Exposed AI Services (2026-05-05). https://thehackernews.com/2026/05/we-scanned-1-million-exposed-ai.html (Zugriff 2026-10-08): Bericht über die Intruder-Untersuchung; Zählung von über 5.200 Servern, die eine Modellliste preisgaben, davon 31 % ohne Anmeldung; Anbieter hat kommerzielles Interesse an solchen Befunden (Sicherheitsprodukt)"
   - "NVD: CVE-2026-7482. https://nvd.nist.gov/vuln/detail/CVE-2026-7482 (Zugriff 2026-10-08, veröffentlicht 2026-05-04): Ollama vor 0.17.1, Heap-Out-of-bounds-Lesezugriff beim Verarbeiten einer präparierten GGUF-Datei über /api/create, Abfluss über /api/push, diese Endpunkte laut Beschreibung ohne Authentifizierung; CVSS 3.1 9.1 von der meldenden CNA (Echo), NVD-eigene Bewertung zum Zugriffszeitpunkt ausstehend"
@@ -231,13 +233,13 @@ quellen_fachlich:
   - "Hugging Face Hub Docs: Pickle Scanning. https://huggingface.co/docs/hub/security-pickle (Zugriff 2026-10-08): beim Laden von Pickle-Dateien kann beliebiger Code ausgeführt werden; 'do not unpickle data from untrusted sources'; Alternativen u. a. safetensors; Hub-Scan 'nicht 100 % narrensicher'. Hugging Face Text Generation Inference, Safetensors-Sicherheit https://huggingface.co/docs/text-generation-inference/main/en/basic_tutorials/safety (Zugriff 2026-10-08): safetensors als reines Datenformat ('pure data') beschrieben"
   - "Open Source Initiative: The Open Source AI Definition 1.0 (2024-10-28). https://opensource.org/ai/open-source-ai-definition (Zugriff 2026-10-08): vier Freiheiten; verlangt Dateninformationen, vollständigen Code und Parameter unter OSI-konformen Bedingungen"
   - "Eigene Artikel der Reihe: E2 (Werkzeugtypen lokal und Cloud), E6 (Grenzen, Wissensstand), E7 (Daten-Ampel), A5 (geprüfte Ausführung), A7 (Testfälle, Vorlagen), A8 (Prüfung, Zweitmeinung, Protokoll); Vorwärtsverweise auf P1, P2, D1, D6, R1, R3, R4, R6"
-  - "Rechnungen in Abschnitt 2 am 2026-10-08 mit Python ausgeführt: 8 Mrd. Parameter bei 16, 8,5 und 4,89 Bit = 16,0, 8,5, 4,9 GB; Gegenprobe mit 8,03 Mrd.: 16,06 GB = 14,96 GiB (16 Bit) und 4,58 GiB (4,8944 Bit), deckungsgleich mit der Dokumentation; Zwischenspeicher 57.344 Byte pro Token, 1,75 GiB bei 32.768 Token; Ideal-Obergrenze Token/s 10 bei 50 GB/s und 82 bei 400 GB/s (Modell 4,9 GB)"
+  - "Rechnungen in Abschnitt 2 am 2026-10-08 mit Python ausgeführt: 8 Mrd. Parameter bei 16, 8,5 und 4,89 Bit = 16,0, 8,5, 4,9 GB; Gegenprobe mit 8,03 Mrd.: 16,06 GB = 14,96 GiB (16 Bit) und 4,58 GiB (4,8944 Bit), deckungsgleich mit der Dokumentation; Zwischenspeicher 57.344 Byte pro Token, 1,75 GiB bei 32.768 Token und 7,0 GiB bei 131.072 Token (Ausführung am 2026-10-21); Ideal-Obergrenze Token/s 10 bei 50 GB/s und 82 bei 400 GB/s (Modell 4,9 GB)"
 verifikation_offen:
   - "Intruder-Untersuchung selbst nicht geöffnet; die Zahlen (31 %, über 5.200 Instanzen) stammen aus der CSA-Zusammenfassung und dem Bericht der Hacker News, beide abgeglichen. Stichprobe öffentlich auffindbarer Instanzen mit Modellliste, nicht auf alle Installationen übertragbar; Anbieter mit kommerziellem Interesse. Methodik (Zertifikatstransparenz-Logs) nur aus Sekundärquellen"
   - "CVE-2026-7482: NVD-Eintrag gelesen; Schweregrad von der meldenden Stelle, NVD-Bewertung ausstehend (Stand 2026-10-08, vor Final erneut prüfen). Das geringere Risiko bei reiner lokaler Nutzung ist eine Schlussfolgerung aus der Voraussetzung 'Zugriff auf die Schnittstelle', keine Aussage der Quelle"
   - "Ollama-Befehle der Beispielbox aus der Dokumentation abgeglichen, nicht selbst ausgeführt (kein passender Rechner); Größenangaben der Modellseite gemma4 nur als Spanne über Varianten gelesen und im Text bewusst nicht genannt (Standard-Tag 6,6 bis 9,5 GB, e2b 4,6 bis 7,5 GB, Stand 2026-10-08); Modellnamen und Verfügbarkeit ändern sich"
   - "Denkmodell Token/s ≈ Bandbreite ÷ Modellgröße ist eine eigene Herleitung aus der Aussage 'speichergebunden', nicht wörtlich in der NVIDIA-Quelle; im Text als Denkmodell mit angenommenen Beispielwerten gekennzeichnet; gilt nicht für Bauarten, die pro Token nur Teile der Gewichte lesen. Auch bei dichten Modellen ist die Rechnung nur eine idealisierte Obergrenze; tatsächliche Token/s hängen von Programm, Hardware, Rechenoperationen, Kontext und Speicherzugriffen ab"
-  - "Formel für den Zwischenspeicher (2 × Schichten × KV-Köpfe × Kopfgröße × Bytes) ist Fachwissen und in den abgerufenen Quellen nicht wörtlich belegt; Eingangswerte aus der config.json des genannten Modells. Gilt für dichte Aufmerksamkeit mit Gruppierung der KV-Köpfe, nicht für alle Bauarten. Im Text als Vereinfachung gekennzeichnet"
+  - "Formel für den Zwischenspeicher (2 × Schichten × KV-Köpfe × Kopfgröße × Bytes) ist in der Grundform (2 × Schichten × Köpfe × Kopfgröße × Bytes) im NVIDIA-Blog belegt (Stand 2026-10-21); die Zählung nur der Schlüssel-Wert-Köpfe bei gruppierter Aufmerksamkeit ist eine Anpassung, die dort nicht steht. Eingangswerte aus der config.json des genannten Modells. Gilt nicht für alle Bauarten. Im Text als Vereinfachung gekennzeichnet. 131.072 Token nutzen laut Modellkarte eine Erweiterung (YaRN), die nicht in der Standardkonfiguration steckt; der 7-GiB-Wert ist ein reines Rechenbeispiel"
   - "Bits pro Gewicht gemessen an einem 8-Milliarden-Modell; für andere Modelle weichen die Werte leicht ab. Im Text als Mittelwerte bezeichnet. Übung 1 rechnet deshalb nur als Größenordnung"
   - "Aussagen zu Stärken und Schwächen kleinerer Modelle, zum Erfinden von Fakten und zur Sprachqualität sind Praxiserwartungen ohne Einzelquelle und im Text als Faustregel gekennzeichnet; keine Studie dazu gelesen"
   - "Safetensors: Die Aussage 'reine Daten' stammt aus der TGI-Dokumentation; der Hub-Dokumentation allein ist sie nicht zu entnehmen. Im Text als Beschreibung dieser Plattform formuliert"
@@ -260,4 +262,7 @@ review_historie:
   - runde: 4
     datum: 2026-10-08
     ergebnis: "Verweise nach Umnummerierung des Dahinter-Blocks angepasst (D7 wird D6, Modellfamilien und Größen). Inhaltlich unverändert, Status bleibt final."
+  - runde: 5
+    datum: 2026-10-21
+    ergebnis: "Pflegekorrektur nach Abgleich mit zwei Quellen. Zwischenspeicher: KV-Formel jetzt als aus dem NVIDIA-Blog stammend ausgewiesen (mit Anpassung für gruppierte Köpfe), Länge als 32.768 aus der Konfiguration, Modellkarte nennt bis 131.072 (YaRN), Rechnung um 7,0 GiB ergänzt. Sonst unverändert, Status bleibt final."
 ```

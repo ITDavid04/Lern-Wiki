@@ -32,7 +32,7 @@ Kostenlos, ohne Anmeldung, ohne Werbung. Rund 160 Artikel, Spickzettel und
 | [Mathe, was notwendig ist](Lernmaterial_Lernfelder/Mathe_Was_Notwendig_ist) | Pseudocode, Mengenlehre, Dreisatz, Zahlensysteme, Boolesche Logik |
 | [SQL](Lernmaterial_Lernfelder/SQL) und [SQLite](Lernmaterial_Lernfelder/SQLITE) | Von den Grundlagen über Joins bis zur Normalisierung |
 | [WiSo](Lernmaterial_Lernfelder/WISO) | Ausbildung, Arbeitsrecht, Sozialversicherung, Verträge, Wirtschaft |
-| [KI vom Anfänger bis zum Nerd](KI-Anf%C3%A4nger_bis_Nerd_Die_Sammlung) | 27 Artikel in vier Stufen: was KI ist, wie man damit lernt und arbeitet, wie sie innen funktioniert, wie man sie selbst betreibt |
+| [KI vom Anfänger bis zum Nerd](KI-Anf%C3%A4nger_bis_Nerd_Die_Sammlung) | 28 Artikel in vier Stufen: was KI ist, wie man damit lernt und arbeitet, wie sie innen funktioniert, wie man sie selbst betreibt |
 | Technik-Praxis | [Ubuntu](Ubuntu), [Autoinstall](Autoinstall), [Bash](Bash_Scripting), [Docker](Docker), [Git und GitHub](Github), [KVM/QEMU](KVM_Qemu_Stuff), [Netzwerk](Network), [lokale LLMs](LLM_Stuff), [Software-Testing](Software_Testing_2026), [TypeScript](TypeScript) |
 | [Praktikum und Bewerbung](Umschulung_Praktika_Hilfe.md) | Vorbereitung auf Praktikumsgespräche für Umschülerinnen und Umschüler |
 
